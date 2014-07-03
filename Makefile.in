@@ -1,0 +1,19 @@
+CFLAGS = -g -Wall -D_X86_64_
+LIBS = -lpthread
+CC = cc
+
+TEST = $(patsubst %.c,%_test,$(SRC))
+PROG = $(SRC:%.c=%)
+
+all: $(PROG)
+
+.c: $(SRC)
+	$(CC) $(CFLAGS) $(LIBS) -D_$@_ stub.c -o $@ $<
+
+clean:
+	rm -rf $(PROG) $(TEST) *~ *.dSYM
+
+test: $(TEST)
+
+%_test: %.c
+	$(CC) $(CFLAGS) $(LIBS) -D_SINGLE_THREAD_ -o $@ $<
