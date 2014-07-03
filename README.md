@@ -1,4 +1,4 @@
-#  An Educational parallel Algorithm collection
+#  An Educational Parallel Algorithm Collection
 
 This is an educational parallel algorithm collection in C of some samples of the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)" .
 
