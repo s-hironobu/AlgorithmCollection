@@ -1,3 +1,4 @@
-SRC = LLSCLockFreeQueue.c
+SRC = LLSCLockFreeQueue.c \
+	CASLockFreeQueue.c
 
 include ../Makefile.in

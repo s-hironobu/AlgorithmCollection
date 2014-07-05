@@ -1,4 +1,4 @@
-#  An Educational Parallel Algorithm Collection
+#  Educational Parallel Algorithm Collection
 
 This is an educational parallel algorithm collection in C of some samples of the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)" .
 
@@ -9,6 +9,8 @@ This is an educational parallel algorithm collection in C of some samples of the
 
  + LLSCLockFreeQueue
   - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.170.1375">"Bringing Practical LockFree Synchronization to 64Bit Applications"</a> by Simon Doherty, Maurice Herlihy, Victor Luchangco, Mark Moir
+ + CASLockFreeQueue
+  - <a href="http://www.cs.rochester.edu/u/scott/papers/1996_PODC_queues.pdf">"Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms"</a> by M. Michael and M. Scott
 
 ### List
 

@@ -1,5 +1,5 @@
 MAKE = make --no-print-directory
-DIRS = hash\
+DIRS = hash \
 	list \
 	queue
 
