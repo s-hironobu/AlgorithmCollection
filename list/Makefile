@@ -4,6 +4,7 @@ SRC = CoarseGrainedSynchroList.c \
 	LazySynchroList.c \
 	Skiplist.c \
 	LockFreeSkiplist.c \
-	NonBlockingList.c
+	NonBlockingList.c \
+	LockFreeList.c 
 
 include ../Makefile.in

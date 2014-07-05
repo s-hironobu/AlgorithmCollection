@@ -20,6 +20,8 @@ This is an educational parallel algorithm collection in C of some samples of the
   - Lazy Synchronization Singly-linked List
  + NonBlockingList
   - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.1384">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> Timothy L. Harris 
+ + LockFreeList
+  - <a href="http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf">"Lock-Free Linked Lists and Skip Lists"</a> Mikhail Fomitchev, Eric Ruppert
 
 #### SkipList
  + Skiplist
