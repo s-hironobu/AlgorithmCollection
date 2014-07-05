@@ -3,7 +3,7 @@
 This is an educational parallel algorithm collection in C of some samples of the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)" .
 
 
-## Sources
+## Algorithms
 
 ### Queue
 
@@ -42,7 +42,7 @@ This is an educational parallel algorithm collection in C of some samples of the
  + RefinableHash
   - Refinable Hash Table
  + CuckooHash
-  -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"R.Pagh, F.F.Rodler, Cuchoo Hashing" </a>
+  -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"R.Pagh, F.F.Rodler, Cuckoo Hashing" </a>
  + ConcurrentCuckooHash
   - Concurrent Cuckoo Hash Table
 
