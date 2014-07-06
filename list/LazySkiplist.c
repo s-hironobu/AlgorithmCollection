@@ -53,13 +53,13 @@ static bool_t _find(skiplist_t *, skiplist_node_t **, skiplist_node_t **, const 
  *     [1]     2     5
  *     [0]     3     5
  *
- *   "preds[2]=2" means that "the node whose key is 2 pointed to the node whose key is 4 at level 2".
- *   "preds[1]=2" means that "the node whose key is 2 pointed to the node whose key is 4 at level 1".
- *   "preds[0]=3" means that "the node whose key is 3 pointed to the node whose key is 4 at level 0".
+ *   "preds[2]=2" means that "the node whose key is 2 refers to the node whose key is 4 at level 2".
+ *   "preds[1]=2" means that "the node whose key is 2 refers to the node whose key is 4 at level 1".
+ *   "preds[0]=3" means that "the node whose key is 3 refers to the node whose key is 4 at level 0".
  *
- *   "succs[2]=7" means that "the node whose key is 4 pointed to the node whose key is 7 at level 2".
- *   "succs[1]=5" means that "the node whose key is 4 pointed to the node whose key is 5 at level 1".
- *   "succs[0]=5" means that "the node whose key is 4 pointed to the node whose key is 5 at level 0".
+ *   "succs[2]=7" means that "the node whose key is 4 refers to the node whose key is 7 at level 2".
+ *   "succs[1]=5" means that "the node whose key is 4 refers to the node whose key is 5 at level 1".
+ *   "succs[0]=5" means that "the node whose key is 4 refers to the node whose key is 5 at level 0".
  */
 static int search(const skiplist_t * sl, const lkey_t key, skiplist_node_t ** preds, 
 		  skiplist_node_t ** succs)
