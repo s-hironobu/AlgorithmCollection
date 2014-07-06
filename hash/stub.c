@@ -34,9 +34,13 @@
 #define PIPE_MAXLINE 32
 #define MAX_THREADS 200
 #define MAX_ITEMS 30000
+#define MAX_BUCKET_SIZE 16
+#define MAX_TABLE_SIZE 8
 
 #define DEFAULT_THREADS 10
 #define DEFAULT_ITEMS 1000
+#define DEFAULT_BUCKET_SIZE 4
+#define DEFAULT_TABLE_SIZE 4
 
 static hashtable_t *ht;
 
@@ -55,6 +59,8 @@ typedef struct {
     int thread_num;
     int item_num;
     int verbose;
+    int bucket_size;
+    int table_size;
 } system_variables_t;
 
 struct stat_time {
@@ -252,7 +258,11 @@ static int workbench(void)
 #ifdef _ConcurrentCuckooHash_
     if ((ht = init_hashtable(4, 4, 2)) == NULL) {
 #else
-    if ((ht = init_hashtable(16)) == NULL) {
+#if defined(_Hash_) || (_RefinableHash_) || (_StripedHash_)
+    if ((ht = init_hashtable(system_variables.bucket_size)) == NULL) {
+#else
+    if ((ht = init_hashtable(system_variables.table_size)) == NULL) {
+#endif
 #endif
       elog("init_list() error");
       abort();
@@ -311,8 +321,14 @@ static void usage(char **argv)
 {
     fprintf(stderr, "simple algorithm test bench\n");
     fprintf(stderr, "usage: %s [Options<default>]\n", argv[0]);
-    fprintf(stderr, "\t\t-t number_of_thread<%d>\n", DEFAULT_THREADS);
-    fprintf(stderr, "\t\t-n number_of_item<%d>\n", DEFAULT_ITEMS);
+    fprintf(stderr, "\t\t-t number_of_threads<%d>\n", DEFAULT_THREADS);
+    fprintf(stderr, "\t\t-n number_of_items<%d>\n", DEFAULT_ITEMS);
+#if defined(_Hash_) || (_RefinableHash_) || (_StripedHash_)
+    fprintf(stderr, "\t\t-b initial_bucket_size<%d>\n", DEFAULT_BUCKET_SIZE);
+#endif
+#if defined(_OpenAddressHash_) || (_CuckooHash_)
+    fprintf(stderr, "\t\t-s n (initial_table_size = 2^n)<%d>\n", DEFAULT_TABLE_SIZE);
+#endif
     fprintf(stderr, "\t\t-v               :verbose\n");
     fprintf(stderr, "\t\t-V               :debug mode\n");
     fprintf(stderr, "\t\t-h               :help\n");
@@ -343,7 +359,15 @@ int main(int argc, char **argv)
     init_system_variables();
 
     /* options  */
+#if defined(_Hash_) || (_RefinableHash_) || (_StripedHash_)
+    while ((c = getopt(argc, argv, "t:n:b:vVh")) != -1) {
+#else
+#if defined(_OpenAddressHash_) || (_CuckooHash_)
+      while ((c = getopt(argc, argv, "t:n:s:vVh")) != -1) {
+#else
     while ((c = getopt(argc, argv, "t:n:vVh")) != -1) {
+#endif
+#endif
 	switch (c) {
 	case 't':		/* number of thread */
 	    system_variables.thread_num = strtol(optarg, NULL, 10);
@@ -363,8 +387,28 @@ int main(int argc, char **argv)
 		exit(-1);
 	    } else if (MAX_ITEMS <= system_variables.item_num)
 		system_variables.item_num = MAX_ITEMS;
-
+#if defined(_Hash_) || (_RefinableHash_) || (_StripedHash_)
+	case 'b':		/* initial bucket size */
+	    system_variables.bucket_size = strtol(optarg, NULL, 10);
+	    if (system_variables.bucket_size <= 0) {
+		fprintf(stderr, "Error: bucket size %d is not valid\n",
+			system_variables.bucket_size);
+		exit(-1);
+	    } else if (MAX_BUCKET_SIZE <= system_variables.bucket_size)
+		system_variables.bucket_size = MAX_BUCKET_SIZE;
 	    break;
+#endif
+#if defined(_OpenAddressHash_) || (_CuckooHash_)
+	case 's':		/* initial table size */
+	    system_variables.table_size = strtol(optarg, NULL, 10);
+	    if (system_variables.table_size <= 0) {
+		fprintf(stderr, "Error: initial table size %d is not valid\n",
+			system_variables.table_size);
+		exit(-1);
+	    } else if (MAX_TABLE_SIZE <= system_variables.table_size)
+		system_variables.table_size = MAX_TABLE_SIZE;
+	    break;
+#endif
 	case 'v':               /* verbose 1 */
 	    system_variables.verbose = 1;
 	    break;

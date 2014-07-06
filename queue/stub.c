@@ -228,11 +228,12 @@ static void worker_thread(void *arg)
 	printf ("ERROR[%lu]: del %ld\n", no, getval);
       }
 
+      if (0 < system_variables.verbose)
+	fprintf(stderr, "thread[%lu] delete: %ld\n", (uintptr_t)no, 
+		(lkey_t) getval);
+
       if (1 < system_variables.verbose)
 	show_queue(queue);
-      
-      if (0 < system_variables.verbose)
-	fprintf(stderr, "delete: val = %ld\n", (lkey_t) getval);
       
       sum[no] += getval;
       
@@ -318,8 +319,8 @@ static void usage(char **argv)
 {
     fprintf(stderr, "simple algorithm test bench\n");
     fprintf(stderr, "usage: %s [Options<default>]\n", argv[0]);
-    fprintf(stderr, "\t\t-t number_of_thread<%d>\n", DEFAULT_THREADS);
-    fprintf(stderr, "\t\t-n number_of_item<%d>\n", DEFAULT_ITEMS);
+    fprintf(stderr, "\t\t-t number_of_threads<%d>\n", DEFAULT_THREADS);
+    fprintf(stderr, "\t\t-n number_of_items<%d>\n", DEFAULT_ITEMS);
     fprintf(stderr, "\t\t-v               :verbose\n");
     fprintf(stderr, "\t\t-V               :debug mode\n");
     fprintf(stderr, "\t\t-h               :help\n");

@@ -1,4 +1,4 @@
-#  Educational Parallel Algorithm Collection
+i#  Educational Parallel Algorithm Collection
 
 This is an educational parallel algorithm collection in C of some samples of the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)" .
 
@@ -21,14 +21,14 @@ This is an educational parallel algorithm collection in C of some samples of the
  + LazySynchroList
   - Lazy Synchronization Singly-linked List
  + NonBlockingList
-  - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.1384">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> Timothy L. Harris 
+  - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.1384">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> by Timothy L. Harris 
  + LockFreeList
-  - <a href="http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf">"Lock-Free Linked Lists and Skip Lists"</a> Mikhail Fomitchev, Eric Ruppert
+  - <a href="http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf">"Lock-Free Linked Lists and Skip Lists"</a> by Mikhail Fomitchev, Eric Ruppert
 
 #### SkipList
  + Skiplist
  + LazySkiplist
-  -  <a href="http://www.cs.brown.edu/~levyossi/Pubs/LazySkipList.pdf">"A Simple Optimistic skip-list Algorithm"</a> Maurice Herlihy, Yossi Lev, Victor Luchangco, Nir Shavit
+  -  <a href="http://www.cs.brown.edu/~levyossi/Pubs/LazySkipList.pdf">"A Simple Optimistic skip-list Algorithm"</a> by Maurice Herlihy, Yossi Lev, Victor Luchangco, Nir Shavit
  + LockFreeSkiplist
   - <a href="http://www.cs.brown.edu/courses/csci1760/ch14.ppt">"A Lock-Free concurrent skiplist with wait-free search"</a> by Maurice Herlihy & Nir Shavit
 
@@ -42,19 +42,34 @@ This is an educational parallel algorithm collection in C of some samples of the
  + RefinableHash
   - Refinable Hash Table
  + CuckooHash
-  -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"R.Pagh, F.F.Rodler, Cuckoo Hashing" </a>
+  -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"Cuckoo Hashing"</a> by R.Pagh, F.F.Rodler
  + ConcurrentCuckooHash
   - Concurrent Cuckoo Hash Table
 
 
-## Compile
+## Compile on Linux(X86_64) and OSX
 
-    make
-    make test
+    $ make
+    $ make test
 
-## Example
+## How to use
 Here, I will be explained using queue/LLSCLockFreeQueue.
 
+### Usage
+
+    $ ./queue/LLSCLockFreeQueue -h
+    simple algorithm test bench
+    usage: ./queue/LLSCLockFreeQueue [Options<default>]
+    		-t number_of_thread<10>
+    		-n number_of_item<1000>
+    		-v               :verbose
+    		-V               :debug mode
+    		-h               :help
+
+
+Some programs have other options. Please check each.
+
+### Execute
 
 By default, run 10 threads, and each thread inserts and deletes 1000 items.
 
@@ -69,20 +84,10 @@ By default, run 10 threads, and each thread inserts and deletes 1000 items.
     	    thread info:
     	      ave. = 0.002807[sec], min = 0.000832[sec], max = 0.004397[sec]  
 
-Help message is:
 
-     ./queue/LLSCLockFreeQueue -h
-    simple algorithm test bench
-    usage: ./queue/LLSCLockFreeQueue [Options<default>]
-    		-t number_of_thread<10>
-    		-n number_of_item<1000>
-    		-v               :verbose
-    		-V               :debug mode
-    		-h               :help
+You can change the number of items and the number of threads.
 
-Default parameters are able to change using '-n' and '-t' options.
-
-    $./queue/LLSCLockFreeQueue -t 20 -n 10000
+    $ ./queue/LLSCLockFreeQueue -t 20 -n 10000
     <<simple algorithm test bench>>
     RESULT: test OK
     condition =>
@@ -93,8 +98,58 @@ Default parameters are able to change using '-n' and '-t' options.
     	    thread info:
     	      ave. = 0.050064[sec], min = 0.008257[sec], max = 0.059089[sec]
 
-Run the LLSCLockFreeQueue_test.You can see how to work in the LLSCLockFreeQueue program in a single thread.
+#### Verbose & Debug mode
+You can see how to work in the LLSCLockFreeQueue program.
 
+    $ ./queue/LLSCLockFreeQueue -t 2 -n 4 -V
+    <<simple algorithm test bench>>
+    thread[1] add: 5
+    [5]
+    thread[1] add: 6
+    [5][6]
+    thread[1] add: 7
+    [5][6][7]
+    thread[1] add: 8
+    [5][6][7][8]
+    thread[0] add: 1
+    [5][6][7][8][1]
+    thread[0] add: 2
+    [5][6][7][8][1][2]
+    thread[0] add: 3
+    [5][6][7][8][1][2][3]
+    thread[0] add: 4
+    [5][6][7][8][1][2][3][4]
+    thread[0] delete: 5
+    [6][7][8][1][2][3][4]
+    thread[0] delete: 6
+    [7][8][1][2][3][4]
+    thread[0] delete: 7
+    [8][1][2][3][4]
+    thread[0] delete: 8
+    [1][2][3][4]
+    thread[1] delete: 1
+    [2][3][4]
+    thread[1] delete: 2
+    [3][4]
+    thread[1] delete: 3
+    [4]
+    thread[1] delete: 4
+
+    thread(0) end 0.002006[sec]
+    thread(1) end 0.006205[sec]
+    RESULT: test OK
+    condition =>
+    	2 threads run
+    	4 items inserted and deleted / thread, total 8 items
+    performance =>
+    	interval =  0.006519 [sec]
+    	thread info:
+    	  ave. = 0.004106[sec], min = 0.002006[sec], max = 0.006205[sec]
+
+
+
+### Test
+Run the LLSCLockFreeQueue_test. You can see more easily how to work this program.
 
     $ ./queue/LLSCLockFreeQueue_test
     [0]
@@ -116,7 +171,4 @@ Run the LLSCLockFreeQueue_test.You can see how to work in the LLSCLockFreeQueue 
     [7][8][9]
     [8][9]
     [9]
-
-
-Every programs have test programs.
 

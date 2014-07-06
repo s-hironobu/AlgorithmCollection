@@ -38,9 +38,11 @@
 #define PIPE_MAXLINE 32
 #define MAX_THREADS 200
 #define MAX_ITEMS 30000
+#define MAX_LEVEL 16
 
 #define DEFAULT_THREADS 10
 #define DEFAULT_ITEMS 1000
+#define DEFAULT_LEVEL 4
 
 #if defined(_Skiplist_) || (_LazySkiplist_) || (_LockFreeSkiplist_)
 static skiplist_t *list;
@@ -63,6 +65,7 @@ typedef struct {
     int thread_num;
     int item_num;
     int verbose;
+    int max_level;
 } system_variables_t;
 
 struct stat_time {
@@ -264,7 +267,7 @@ static int workbench(void)
     fprintf(stderr, "<<simple algorithm test bench>>\n");
 
 #if defined(_Skiplist_) || (_LazySkiplist_) || (_LockFreeSkiplist_)
-    if ((list = init_list(8, INT_MIN, INT_MAX)) == NULL) {
+    if ((list = init_list(system_variables.max_level, INT_MIN, INT_MAX)) == NULL) {
 #else
     if ((list = init_list()) == NULL) {
 #endif
@@ -325,8 +328,11 @@ static void usage(char **argv)
 {
     fprintf(stderr, "simple algorithm test bench\n");
     fprintf(stderr, "usage: %s [Options<default>]\n", argv[0]);
-    fprintf(stderr, "\t\t-t number_of_thread<%d>\n", DEFAULT_THREADS);
-    fprintf(stderr, "\t\t-n number_of_item<%d>\n", DEFAULT_ITEMS);
+    fprintf(stderr, "\t\t-t number_of_threads<%d>\n", DEFAULT_THREADS);
+    fprintf(stderr, "\t\t-n number_of_items<%d>\n", DEFAULT_ITEMS);
+#if defined(_Skiplist_) || (_LazySkiplist_) || (_LockFreeSkiplist_)
+    fprintf(stderr, "\t\t-l max_level_of_skiplist<%d>\n", DEFAULT_LEVEL);
+#endif
     fprintf(stderr, "\t\t-v               :verbose\n");
     fprintf(stderr, "\t\t-V               :debug mode\n");
     fprintf(stderr, "\t\t-h               :help\n");
@@ -337,6 +343,7 @@ static void init_system_variables(void)
 {
     system_variables.thread_num = DEFAULT_THREADS;
     system_variables.item_num = DEFAULT_ITEMS;
+    system_variables.max_level = DEFAULT_LEVEL;
     system_variables.verbose = 0;
 }
 
@@ -357,7 +364,11 @@ int main(int argc, char **argv)
     init_system_variables();
 
     /* options  */
+#if defined(_Skiplist_) || (_LazySkiplist_) || (_LockFreeSkiplist_)
+    while ((c = getopt(argc, argv, "t:n:l:vVh")) != -1) {
+#else
     while ((c = getopt(argc, argv, "t:n:vVh")) != -1) {
+#endif
 	switch (c) {
 	case 't':		/* number of thread */
 	    system_variables.thread_num = strtol(optarg, NULL, 10);
@@ -377,8 +388,18 @@ int main(int argc, char **argv)
 		exit(-1);
 	    } else if (MAX_ITEMS <= system_variables.item_num)
 		system_variables.item_num = MAX_ITEMS;
-
 	    break;
+#if defined(_Skiplist_) || (_LazySkiplist_) || (_LockFreeSkiplist_)
+	case 'l':		/* max level of skiplist */
+	    system_variables.max_level = strtol(optarg, NULL, 10);
+	    if (system_variables.max_level <= 0) {
+		fprintf(stderr, "Error: max level %d is not valid\n",
+			system_variables.max_level);
+		exit(-1);
+	    } else if (MAX_LEVEL <= system_variables.max_level)
+		system_variables.max_level = MAX_LEVEL;
+	    break;
+#endif
 	case 'v':               /* verbose 1 */
 	    system_variables.verbose = 1;
 	    break;
