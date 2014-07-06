@@ -35,7 +35,7 @@
 #define MAX_THREADS 200
 #define MAX_ITEMS 30000
 #define MAX_BUCKET_SIZE 16
-#define MAX_TABLE_SIZE 8
+#define MAX_TABLE_SIZE 16
 
 #define DEFAULT_THREADS 10
 #define DEFAULT_ITEMS 1000
@@ -340,6 +340,8 @@ static void init_system_variables(void)
     system_variables.thread_num = DEFAULT_THREADS;
     system_variables.item_num = DEFAULT_ITEMS;
     system_variables.verbose = 0;
+    system_variables.bucket_size = DEFAULT_BUCKET_SIZE;
+    system_variables.table_size = DEFAULT_TABLE_SIZE;
 }
 
 
