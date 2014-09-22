@@ -53,7 +53,6 @@ This is an educational parallel algorithm collection in C of some samples of the
     $ make test
 
 ## How to use
-Here, I will be explained using queue/LLSCLockFreeQueue.
 
 ### Usage
 
