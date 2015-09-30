@@ -52,7 +52,6 @@ This is a parallel algorithm collection written in C. This collection contains s
     $ make test
 
 ## How to use
-Here, I will be explained using queue/LLSCLockFreeQueue.
 
 ### Usage
 
