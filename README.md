@@ -1,6 +1,6 @@
 #  Educational Parallel Algorithm Collection
 
-This is a parallel algorithm collection written in C. This collection contains several principal programs described in the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)" .
+This is a parallel algorithm collection written in C. It contains fifteen programs that are explained in the book "The Art of Multiprocessor Programming (M. Herlihy, N. Shavit)".
 
 ## Algorithms
 
