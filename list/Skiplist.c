@@ -256,7 +256,7 @@ bool_t delete(skiplist_t * sl, const lkey_t key, val_t * val)
 
     unlock(sl->mtx);
 
-    return true;
+    return ret;
 }
 
 
