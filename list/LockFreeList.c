@@ -164,7 +164,7 @@ bool_t add(list_t * list, const lkey_t key, const val_t val)
     if (searchFrom2(key, list->head, &prev_node, &next_node) != true)
       return false;
     
-    if (prev_node->key == key)
+    if (next_node->key == key)
       return false;
     
     if ((newNode = create_node(key, val)) == NULL)
