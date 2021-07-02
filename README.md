@@ -6,43 +6,43 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
 
 ### Queue
 
- + LLSCLockFreeQueue
+ 1. LLSCLockFreeQueue
   - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.170.1375">"Bringing Practical LockFree Synchronization to 64Bit Applications"</a> by Simon Doherty, Maurice Herlihy, Victor Luchangco, Mark Moir
- + CASLockFreeQueue
+ 2. CASLockFreeQueue
   - <a href="http://www.cs.rochester.edu/u/scott/papers/1996_PODC_queues.pdf">"Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms"</a> by M. Michael and M. Scott
 
 ### List
 
- + CoarseGrainedSynchroList
+ 1. CoarseGrainedSynchroList
   - Coarse-Grained Synchronization Singly-linked List
- + FineGrainedSynchroList
+ 2. FineGrainedSynchroList
   - Fine-Grained Synchronization Singly-linked List
- + LazySynchroList
+ 3. LazySynchroList
   - Lazy Synchronization Singly-linked List
- + NonBlockingList
+ 4. NonBlockingList
   - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.1384">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> by Timothy L. Harris 
- + LockFreeList
+ 5. LockFreeList
   - <a href="http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf">"Lock-Free Linked Lists and Skip Lists"</a> by Mikhail Fomitchev, Eric Ruppert
 
 #### SkipList
- + Skiplist
- + LazySkiplist
+ 1. Skiplist
+ 2. LazySkiplist
   -  <a href="http://www.cs.brown.edu/~levyossi/Pubs/LazySkipList.pdf">"A Simple Optimistic skip-list Algorithm"</a> by Maurice Herlihy, Yossi Lev, Victor Luchangco, Nir Shavit
- + LockFreeSkiplist
+ 3. LockFreeSkiplist
   - <a href="http://www.cs.brown.edu/courses/csci1760/ch14.ppt">"A Lock-Free concurrent skiplist with wait-free search"</a> by Maurice Herlihy & Nir Shavit
 
 ### Hash
- + Hash
+ 1. Hash
   - (Chain) Hash Table
- + OpenAddressHash
+ 2. OpenAddressHash
   - Open-Addressed Hash Table
- + StripedHash
+ 3. StripedHash
   - Striped Hash Table
- + RefinableHash
+ 4. RefinableHash
   - Refinable Hash Table
- + CuckooHash
+ 5. CuckooHash
   -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"Cuckoo Hashing"</a> by R.Pagh, F.F.Rodler
- + ConcurrentCuckooHash
+ 6. ConcurrentCuckooHash
   - Concurrent Cuckoo Hash Table
 
 
