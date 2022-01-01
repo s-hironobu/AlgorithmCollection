@@ -2,7 +2,7 @@
  * Skiplist utils
  * 
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Nov.16
- * Copyright (C) 2009  suzuki hironobu
+ * Copyright (C) 2009-2022  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */
@@ -14,9 +14,8 @@
 /* 
  * static workspace_t *init_workspace(const int maxLevel)
  *
- * (スレッド毎に)skiplist *slの補助メモリ領域:predsとsuccsを確保する。
- *
- * 成功すると確保したメモリへのポインタを返す。失敗するとNULLを返す。
+ * Initialize both preds and succs of skiplist *sl in each thread.
+ * Return the pointers of preds and succs if success, otherwise NULL.
  */
 static workspace_t *init_workspace(const int maxLevel)
 {
@@ -47,7 +46,7 @@ static workspace_t *init_workspace(const int maxLevel)
 /*
  * void free_workspace(workspace_t * ws)
  *
- * wsを開放する。
+ * Free ws.
  */
 static void free_workspace(workspace_t * ws)
 {
@@ -59,20 +58,18 @@ static void free_workspace(workspace_t * ws)
 /*
  * workspace_t *get_workspace(skiplist_t * sl)
  *
- * (スレッド毎に)初めて呼ばれた時はメモリ領域へ確保し、pthread_keyに対応させる。
- * 必ずスレッドに対応したメモリ領域へのポインタを返す。
+ * Return the pointer of the workspace.
  *
  */
 static workspace_t *get_workspace(skiplist_t * sl)
 {
-  /* スレッド毎のメモリ領域へのポインタを得る */
+  /* Get workspace. */
   workspace_t *workspace = pthread_getspecific(sl->workspace_key);
 
-  /* まだメモリ領域が確保されていない場合: */
+  /* If the workspace has not been allocated yet. */
   if (workspace == NULL) {
-    /* メモリ領域の確保 */
+    /* Initialize the workspace. */
     if ((workspace = init_workspace(sl->maxLevel)) != NULL) { 
-      /* メモリ領域をpthread_keyに対応させる */
       if (pthread_setspecific(sl->workspace_key, (void *) workspace) != 0) {
 	elog("pthread_setspecific() error");
 	abort();

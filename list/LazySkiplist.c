@@ -4,7 +4,7 @@
  * http://www.cs.brown.edu/~levyossi/Pubs/LazySkipList.pdf
  * 
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Nov.16
- * Copyright (C) 2009-2014  suzuki hironobu
+ * Copyright (C) 2009-2022  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */
