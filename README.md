@@ -7,7 +7,7 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
 ### Queue
 
  1. LLSCLockFreeQueue
-  - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.170.1375">"Bringing Practical LockFree Synchronization to 64Bit Applications"</a> by Simon Doherty, Maurice Herlihy, Victor Luchangco, Mark Moir
+  - <a href="http://www.cs.tau.ac.il/~afek/p31-64bitCASdoherty.pdf">"Bringing Practical LockFree Synchronization to 64Bit Applications"</a> by Simon Doherty, Maurice Herlihy, Victor Luchangco, Mark Moir
  2. CASLockFreeQueue
   - <a href="http://www.cs.rochester.edu/u/scott/papers/1996_PODC_queues.pdf">"Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms"</a> by M. Michael and M. Scott
 
@@ -20,14 +20,14 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
  3. LazySynchroList
   - Lazy Synchronization Singly-linked List
  4. NonBlockingList
-  - <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.16.1384">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> by Timothy L. Harris 
+  - <a href="https://www.cl.cam.ac.uk/research/srg/netos/papers/2001-caslists.pdf">"A Pragmatic Implementation of Non-Blocking Linked-Lists"</a> by Timothy L. Harris
  5. LockFreeList
   - <a href="http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf">"Lock-Free Linked Lists and Skip Lists"</a> by Mikhail Fomitchev, Eric Ruppert
 
 #### SkipList
  1. Skiplist
  2. LazySkiplist
-  -  <a href="http://www.cs.brown.edu/~levyossi/Pubs/LazySkipList.pdf">"A Simple Optimistic skip-list Algorithm"</a> by Maurice Herlihy, Yossi Lev, Victor Luchangco, Nir Shavit
+  -  <a href="http://people.csail.mit.edu/shanir/publications/LazySkipList.pdf">"A Simple Optimistic skip-list Algorithm"</a> by Maurice Herlihy, Yossi Lev, Victor Luchangco, Nir Shavit
  3. LockFreeSkiplist
   - <a href="http://www.cs.brown.edu/courses/csci1760/ch14.ppt">"A Lock-Free concurrent skiplist with wait-free search"</a> by Maurice Herlihy & Nir Shavit
 
@@ -41,7 +41,7 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
  4. RefinableHash
   - Refinable Hash Table
  5. CuckooHash
-  -  <a href="http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf">"Cuckoo Hashing"</a> by R.Pagh, F.F.Rodler
+  -  <a href="https://www.brics.dk/RS/01/32/BRICS-RS-01-32.pdf">"Cuckoo Hashing"</a> by R.Pagh, F.F.Rodler
  6. ConcurrentCuckooHash
   - Concurrent Cuckoo Hash Table
 
