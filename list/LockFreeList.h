@@ -5,7 +5,7 @@
  * http://www.cse.yorku.ca/~ruppert/papers/lfll.pdf
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Nov.16
- * Copyright (C) 2009-2022  suzuki hironobu
+ * Copyright (C) 2009-2023  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

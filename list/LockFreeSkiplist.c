@@ -5,7 +5,7 @@
  *  http://www.cs.brown.edu/courses/csci1760/ch14.ppt
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Dec.01
- * Copyright (C) 2009-2022  suzuki hironobu
+ * Copyright (C) 2009-2023  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

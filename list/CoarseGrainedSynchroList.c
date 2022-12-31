@@ -2,7 +2,7 @@
  * Coarse-Grained Synchronization Singly-linked List
  * 
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Oct.25
- * Copyright (C) 2009-2022  suzuki hironobu
+ * Copyright (C) 2009-2023  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */
