@@ -52,7 +52,7 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
 - OSX (Intel)
 
 
-*M1/M2 OSX is not supported.**
+**M1/M2 OSX is not supported.**
 
 
 ## Compile on Linux(X86_64) and OSX (Intel)
