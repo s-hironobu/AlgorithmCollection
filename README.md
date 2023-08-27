@@ -46,7 +46,16 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
   - Concurrent Cuckoo Hash Table
 
 
-## Compile on Linux(X86_64) and OSX
+## Supported OS
+
+- Linux(X86_64), Linux(X86_32)
+- OSX (Intel)
+
+
+*M1/M2 OSX is not supported.**
+
+
+## Compile on Linux(X86_64) and OSX (Intel)
 
     $ make
     $ make test
