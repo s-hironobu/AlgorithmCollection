@@ -2,7 +2,7 @@
  * Lazy Synchronization Singly-linked List: pthread_mutex version
  * 
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Oct.25
- * Copyright (C) 2009-2023  suzuki hironobu
+ * Copyright (C) 2009-2024  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

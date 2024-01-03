@@ -5,7 +5,7 @@
  * http://www.cs.rochester.edu/u/scott/papers/1996_PODC_queues.pdf
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Dec.03
- * Copyright (C) 2009-2023  suzuki hironobu
+ * Copyright (C) 2009-2024  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

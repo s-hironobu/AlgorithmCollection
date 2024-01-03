@@ -5,7 +5,7 @@
  *  by Simon Doherty, Maurice Herlihy, Victor Luchangco, Mark Moir
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Dec.03
- * Copyright (C) 2009-2023  suzuki hironobu
+ * Copyright (C) 2009-2024  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */
