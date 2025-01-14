@@ -4,7 +4,7 @@
  * "R.Pagh, F.F.Rodler, Cuchoo Hashing" http://cs.nyu.edu/courses/fall05/G22.3520-001/cuckoo-jour.pdf
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Nov.17
- * Copyright (C) 2009-2024  suzuki hironobu
+ * Copyright (C) 2009-2025  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

@@ -3,7 +3,7 @@
  * Lock-Free List : "A Pragmatic Implementation of Non-Blocking Linked-Lists" Timothy L. Harris 
  *
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Dec.02
- * Copyright (C) 2009-2024  suzuki hironobu
+ * Copyright (C) 2009-2025  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */

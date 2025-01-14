@@ -2,7 +2,7 @@
  * Skiplist utils
  * 
  * author: suzuki hironobu (hironobu@interdb.jp) 2009.Nov.16
- * Copyright (C) 2009-2024  suzuki hironobu
+ * Copyright (C) 2009-2025  suzuki hironobu
  *
  * ---------------------------------------------------------------------------
  */
