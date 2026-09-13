@@ -11,6 +11,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <limits.h>
 #include <pthread.h>
 #include <assert.h>
@@ -18,36 +19,21 @@
 #include "LockFreeSkiplist.h"
 #include "concurrent_skiplist.h"
 
-static inline bool_t 
-#ifdef _X86_64_
-cas(volatile tower_ref * addr, const tower_ref oldp,
-		  const tower_ref newp)
+/*
+ * Double-word (16-byte) compare-and-swap on `tower_ref`
+ * ({mark, next_node_ptr}, 8 bytes each on a 64-bit target).
+ */
+static inline bool_t
+cas(volatile tower_ref * addr, const tower_ref oldp, const tower_ref newp)
 {
-    char result;
-    __asm__ __volatile__("lock; cmpxchg16b %0; setz %1":"=m"(*(volatile tower_ref *)addr),
-			 "=q"(result)
-			 :"m"(*(volatile tower_ref *)addr), "a"(oldp.mark),
-			 "d"(oldp.next_node_ptr), "b"(newp.mark),
-			 "c"(newp.next_node_ptr)
-			 :"memory");
+  __int128 oldv, newv;
 
-    return (((int) result != 0) ? true : false);
-}
-#else
-cas(volatile tower_ref * addr, const tower_ref oldp,
-		  const tower_ref newp)
-{
-    char result;
-    __asm__ __volatile__("lock; cmpxchg8b %0; setz %1":"=m"(*(volatile tower_ref *)addr),
-			 "=q"(result)
-			 :"m"(*(volatile tower_ref *)addr), "a"(oldp.mark),
-			 "d"(oldp.next_node_ptr), "b"(newp.mark),
-			 "c"(newp.next_node_ptr)
-			 :"memory");
+  memcpy(&oldv, (const void *) &oldp, sizeof(oldv));
+  memcpy(&newv, (const void *) &newp, sizeof(newv));
 
-    return (((int) result != 0) ? true : false);
+  return __sync_bool_compare_and_swap((volatile __int128 *) addr, oldv, newv)
+      ? true : false;
 }
-#endif
 
 static tower_ref make_ref(const skiplist_node_t * next_node_ptr,
 			  const node_stat mark)

@@ -11,6 +11,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <assert.h>
 #include <pthread.h>
@@ -29,27 +30,20 @@ static void setNLPred(node_t *);
 static void setToBeFreed(node_t *);
 static node_t *create_node (val_t);
 
-#ifdef _X86_64_
+
+#if defined(__LP64__) || defined(_LP64) || (UINTPTR_MAX == 0xffffffffffffffffULL)
 static inline bool_t cas(void *ptr, uint64_t oldv, uint64_t newv)
 {
-  uint64_t result;
-  __asm__ __volatile__("lock; cmpxchgq %1,%2"
-                       : "=a" (result)
-                       : "q" (newv), "m" (*(uint64_t *)ptr),"0" (oldv)
-                       : "memory");
-  return ((result == oldv) ? true : false);
+  return __sync_bool_compare_and_swap((volatile uint64_t *) ptr, oldv, newv)
+      ? true : false;
 }
 #define CAST(value)   (*((uint64_t *)&(value)))
 
 #else
 static inline bool_t cas(void *ptr, uint32_t oldv, uint32_t newv)
 {
-  uint32_t result;
-  __asm__ __volatile__("lock; cmpxchgl %1,%2"
-                       : "=a" (result)
-                       : "q" (newv), "m" (*(uint32_t *)ptr),"0" (oldv)
-                       : "memory");
-  return ((result == oldv) ? true : false);
+  return __sync_bool_compare_and_swap((volatile uint32_t *) ptr, oldv, newv)
+      ? true : false;
 }
 
 #define CAST(value)   (*((uint32_t *)&(value)))

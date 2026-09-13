@@ -48,17 +48,25 @@ This is a parallel algorithm collection written in C. It contains fifteen progra
 
 ## Supported OS
 
-- Linux(X86_64), Linux(X86_32)
-- OSX (Intel)
+- Linux (x86_64, arm64)
+- macOS (Intel and Apple Silicon: M1/M2/M3/...)
 
+The x86-only inline assembly (`cmpxchg8b`/`cmpxchg16b`) that this
+project originally relied on has been replaced with the portable
+GCC/Clang `__sync_bool_compare_and_swap()` builtins, so the exact
+same source now builds unmodified on Apple Silicon (arm64) as well
+as on x86_64.
 
-**M1/M2 OSX is not supported.**
-
-
-## Compile on Linux(X86_64) and OSX (Intel)
+## Compile
 
     $ make
     $ make test
+
+The top-level `Makefile.in` detects the host architecture with
+`uname -m` and only adds `-mcx16` (required so GCC/Clang emit
+`cmpxchg16b` for the 16-byte/double-word CAS) when building on
+x86_64; on arm64 (Apple Silicon) no extra flag is needed since
+16-byte atomics are generated natively.
 
 ## How to use
 

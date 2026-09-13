@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------------------------
- * Lock-Free Skiplist (Intel 32-bit only, __X86_64__ Not SUPPORTED)
+ * Lock-Free Skiplist
  *
  * "A Lock-Free concurrent skiplist with wait-free search" by Maurice Herlihy & Nir Shavit
  *  http://www.cs.brown.edu/courses/csci1760/ch14.ppt

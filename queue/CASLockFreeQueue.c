@@ -11,6 +11,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
 #include <assert.h>
 
@@ -19,31 +20,21 @@
 static node_t *create_node(const val_t);
 static void free_node(node_t *);
 
-
+/*
+ * Double-word (16-byte) compare-and-swap on `pointer_t` ({count, ptr},
+ * 8 bytes each on a 64-bit target).
+ */
 static inline bool_t
-#ifdef _X86_64_
-cas(volatile pointer_t * addr, pointer_t oldp, const pointer_t newp)
-{
-    char result;
-  __asm__ __volatile__("lock; cmpxchg16b %0; setz %1":"=m"(*addr),
-		       "=q"(result)
-		       :"m"(*addr), "a"(oldp.count), "d"(oldp.ptr),
-		       "b"(newp.count), "c"(newp.ptr)
-		       :"memory");
-  return (((int)result == 0) ? false:true);
-}
-#else
 cas(volatile pointer_t * addr, const pointer_t oldp, const pointer_t newp)
 {
-    char result;
-  __asm__ __volatile__("lock; cmpxchg8b %0; setz %1":"=m"(*addr),
-		       "=q"(result)
-		       :"m"(*addr), "a"(oldp.count), "d"(oldp.ptr),
-			"b"(newp.count), "c"(newp.ptr)
-		       :"memory");
-  return (((int)result == 0) ? false:true);
+  __int128 oldv, newv;
+
+  memcpy(&oldv, (const void *) &oldp, sizeof(oldv));
+  memcpy(&newv, (const void *) &newp, sizeof(newv));
+
+  return __sync_bool_compare_and_swap((volatile __int128 *) addr, oldv, newv)
+      ? true : false;
 }
-#endif
 
 
 static node_t *create_node(const val_t val)

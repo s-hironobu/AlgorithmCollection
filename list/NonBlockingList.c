@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <string.h>
 #include <limits.h>
 #include <pthread.h>
 #include <assert.h>
@@ -20,31 +21,21 @@ static node_t *create_node(const lkey_t, const val_t);
 static node_t *search(list_t *, const lkey_t, node_t **);
 static next_ref make_ref(const node_t *, const node_stat);
 
-
+/*
+ * Double-word (16-byte) compare-and-swap on `next_ref` ({mark, node_ptr},
+ * 8 bytes each on a 64-bit target).
+ */
 static inline bool_t
-#ifdef _X86_64_
 cas(next_ref * addr, const next_ref oldp, const next_ref newp)
 {
-  char result;
-  __asm__ __volatile__("lock; cmpxchg16b %0; setz %1":"=m"(*addr),
-		       "=q"(result)
-		       :"m"(*addr), "a"(oldp.mark), "d"(oldp.node_ptr),
-			"b"(newp.mark), "c"(newp.node_ptr)
-		       :"memory");
-  return (((int)result == 0) ? false:true);
+  __int128 oldv, newv;
+
+  memcpy(&oldv, (const void *) &oldp, sizeof(oldv));
+  memcpy(&newv, (const void *) &newp, sizeof(newv));
+
+  return __sync_bool_compare_and_swap((volatile __int128 *) addr, oldv, newv)
+      ? true : false;
 }
-#else
-cas(next_ref * addr, const next_ref oldp, const next_ref newp)
-{
-  char result;
-  __asm__ __volatile__("lock; cmpxchg8b %0; setz %1":"=m"(*addr),
-		       "=q"(result)
-		       :"m"(*addr), "a"(oldp.mark), "d"(oldp.node_ptr),
-			"b"(newp.mark), "c"(newp.node_ptr)
-		       :"memory");
-  return (((int)result == 0) ? false:true);
-}
-#endif
 
 
 #ifdef _FREE_

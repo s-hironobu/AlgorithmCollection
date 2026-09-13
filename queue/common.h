@@ -42,8 +42,15 @@ typedef intptr_t  val_t;
 				     __FUNCTION__, __FILE__, __LINE__,	\
 				     _message_); fflush(stderr);}while(0);
 
-#define MB()  __asm__ __volatile__ ("lock; addl $0,0(%%esp)" : : : "memory")
-#define WMB() __asm__ __volatile__ ("" : : : "memory")
-#define RMB() MB()
+/*
+ * Portable memory barriers (x86_64 and arm64/Apple Silicon).
+ * __sync_synchronize() is a GCC/Clang builtin that lowers to the
+ * appropriate fence instruction on every supported architecture
+ * (MFENCE on x86_64, DMB ISH on arm64), unlike the previous
+ * x86-only inline assembly.
+ */
+#define MB()  __sync_synchronize()
+#define WMB() __sync_synchronize()
+#define RMB() __sync_synchronize()
 
 #endif

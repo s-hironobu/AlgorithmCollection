@@ -1,4 +1,20 @@
-CFLAGS = -g -Wall -D_X86_64_
+# This project no longer requires x86-only inline assembly: the CAS
+# primitives are implemented with portable GCC/Clang __sync builtins, so
+# it builds unmodified on both x86_64 (Intel/AMD) and arm64 (Apple
+# Silicon M1/M2/M3, aarch64 Linux, ...).
+#
+# On x86_64 the 16-byte (double-word) CAS relies on the CMPXCHG16B
+# instruction, which GCC/Clang only emit for __int128 atomics when
+# -mcx16 is given. arm64 needs no special flag: 16-byte atomics are
+# generated natively (LDXP/STXP or, with -march=armv8.1-a+lse, CASP).
+UNAME_M := $(shell uname -m)
+ifeq ($(UNAME_M),x86_64)
+  ARCHFLAGS = -mcx16
+else
+  ARCHFLAGS =
+endif
+
+CFLAGS = -g -Wall -O2 $(ARCHFLAGS)
 LIBS = -lpthread
 CC = cc
 
